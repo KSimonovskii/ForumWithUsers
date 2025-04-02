@@ -1,9 +1,6 @@
-package telran.java57.forum.dto;
+package telran.java57.forum.posts.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -12,6 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class CommentDto {
+    @Setter
     String user;
     String message;
     LocalDateTime dateCreated;

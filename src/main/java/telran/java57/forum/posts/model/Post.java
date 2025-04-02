@@ -1,9 +1,8 @@
-package telran.java57.forum.model;
+package telran.java57.forum.posts.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import telran.java57.forum.dto.CommentDto;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -26,6 +25,7 @@ public class Post {
     @Setter
     String author;
     LocalDateTime dateCreated = LocalDateTime.now();
+    @Setter
     Set<String> tags = new HashSet<String>();
     Integer likes = 0;
     List<Comment> comments = new ArrayList<>();

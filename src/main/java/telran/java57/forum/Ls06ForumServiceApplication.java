@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class Ls06ForumServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(Ls06ForumServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(Ls06ForumServiceApplication.class, args);
+    }
 
 }

@@ -1,4 +1,4 @@
-package telran.java57.forum.dto;
+package telran.java57.forum.posts.dto;
 
 import lombok.Getter;
 
