@@ -5,10 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import telran.java57.forum.posts.dao.PostRepository;
 import telran.java57.forum.posts.dao.exceptions.PostNotFoundException;
-import telran.java57.forum.posts.dto.CommentDto;
-import telran.java57.forum.posts.dto.NewPostDto;
-import telran.java57.forum.posts.dto.PeriodDto;
-import telran.java57.forum.posts.dto.PostDto;
+import telran.java57.forum.posts.dto.*;
 import telran.java57.forum.posts.model.Comment;
 import telran.java57.forum.posts.model.Post;
 
@@ -54,23 +51,23 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<PostDto> findPostsByAuthor(String author) {
-        return postRepository.streamByAuthor(author)
+    public Iterable<PostDto> findPostsByAuthor(String author) {
+        return postRepository.streamByAuthorIgnoreCase(author)
                 .map(post -> modelMapper.map(post, PostDto.class))
                 .toList();
     }
 
     @Override
-    public PostDto addNewComment(String postId, CommentDto newComment) {
+    public PostDto addNewComment(String postId, String author, NewCommentDto newComment) {
         Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
-        post.getComments().add(new Comment(newComment.getUser(), newComment.getMessage()));
+        post.getComments().add(new Comment(author, newComment.getMessage()));
         postRepository.save(post);
         return modelMapper.map(post, PostDto.class);
     }
 
     @Override
     public List<PostDto> findPostsWithTags(List<String> tags) {
-        return postRepository.streamByTagsIn(tags)
+        return postRepository.findPostsByTagsInIgnoreCase(tags)
                 .map(post -> modelMapper.map(post, PostDto.class))
                 .toList();
     }
@@ -83,11 +80,10 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Integer addLike(String postId) {
+    public void addLike(String postId) {
         Post post = postRepository.findById(postId).orElseThrow(PostNotFoundException::new);
         post.addLike();
         postRepository.save(post);
-        return post.getLikes();
     }
 
 

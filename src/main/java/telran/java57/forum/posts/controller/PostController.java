@@ -2,10 +2,7 @@ package telran.java57.forum.posts.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import telran.java57.forum.posts.dto.CommentDto;
-import telran.java57.forum.posts.dto.NewPostDto;
-import telran.java57.forum.posts.dto.PeriodDto;
-import telran.java57.forum.posts.dto.PostDto;
+import telran.java57.forum.posts.dto.*;
 import telran.java57.forum.posts.service.PostService;
 
 import java.util.List;
@@ -38,14 +35,13 @@ public class PostController {
     }
 
     @GetMapping("posts/author/{author}")
-    public List<PostDto> findPostsByAuthor(@PathVariable String author){
+    public Iterable<PostDto> findPostsByAuthor(@PathVariable String author){
         return postService.findPostsByAuthor(author);
     }
 
     @PutMapping("post/{postId}/comment/{author}")
-    public PostDto addComment(@PathVariable String postId, @PathVariable String author, @RequestBody CommentDto newComment){
-        newComment.setUser(author);
-        return postService.addNewComment(postId, newComment);
+    public PostDto addComment(@PathVariable String postId, @PathVariable String author, @RequestBody NewCommentDto newComment){
+        return postService.addNewComment(postId, author, newComment);
     }
 
     @PostMapping("posts/tags")
@@ -59,8 +55,8 @@ public class PostController {
     }
 
     @PutMapping("post/{postId}/like")
-    public Integer addLike(@PathVariable String postId){
-        return postService.addLike(postId);
+    public void addLike(@PathVariable String postId){
+        postService.addLike(postId);
 
     }
 

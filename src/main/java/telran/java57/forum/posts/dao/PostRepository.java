@@ -10,10 +10,10 @@ import java.util.stream.Stream;
 
 
 public interface PostRepository extends MongoRepository<Post, String> {
-    public Stream<Post> streamByAuthor(String author);
+    public Stream<Post> streamByAuthorIgnoreCase(String author);
 
     @Query("{tags: {$elemMatch: {$in: ?0}}}")
-    public Stream<Post> streamByTagsIn(List<String> tags);
+    public Stream<Post> findPostsByTagsInIgnoreCase(List<String> tags);
 
     public Stream<Post> streamByDateCreatedBetween(LocalDateTime dateFrom, LocalDateTime dateTo);
 }
